@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  labtecs-obstetrico-api:
+    image: labtecs/obstetrico-api:${TAG}
+    container_name: labtecs-obstetrico-api
+    restart: unless-stopped
+    ports:
+      - 5555:5555
+    env_file: .env.production
+    networks:
+      - labtecs
+networks:
+  labtecs:
+    driver: bridge

@@ -1,0 +1,408 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+model Paciente {
+  id                    String              @id @unique
+  nome                  String
+  idade                 String
+  dataNascimento        DateTime
+  corOuRaca             String
+  cns                   String
+  profissao             String
+  escolaridade          String
+  nacionalidade         String
+  naturalidade          String
+  uf                    String
+  estadoCivil           String
+  procedencia           String
+  procedenciaObservacao String
+  historico             Historico[]
+  trabalhoDeParto       TrabalhoDeParto[]
+  PuerperioImediato     PuerperioImediato[]
+  nascimento            Nascimento[]
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime?
+}
+
+model Historico {
+  id                         String   @id @unique
+  paciente                   Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId                 String
+  dmg                        Boolean
+  itu                        Boolean
+  hiperemese                 Boolean
+  tpp                        Boolean
+  fm                         Boolean
+  polidramnia                Boolean
+  oligodramnia               Boolean
+  sheg                       Boolean
+  has                        Boolean
+  dm                         Boolean
+  hipotireoidismo            Boolean
+  doencaPsiquiatrica         Boolean
+  outrasDoencasPrevias       String
+  tratamento                 String
+  motivoInternacao           String
+  outroMotivoInternacao      String
+  motivoInternacaoObservacao String
+  leito                      String
+  dataInternacao             DateTime
+  horaInternacao             String
+  risco                      String
+  createdAt                  DateTime @default(now())
+}
+
+model TrabalhoDeParto {
+  id                              String   @id @unique
+  paciente                        Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId                      String
+  fr                              String
+  mrpm                            String
+  respiracaoNormoHipo             String
+  respiracao                      String
+  nome                            String
+  idade                           String
+  dataNascimento                  DateTime
+  temperatura                     String
+  pa                              String
+  pulso                           String
+  batimentosFetais                String
+  hemorroidas                     Boolean
+  varizes                         Boolean
+  edemaLocal                      String
+  quantasCruzes                   String
+  outrasInformacoes               String?  @default("")
+  tontura                         Boolean
+  cefaleia                        Boolean
+  visaoTurva                      Boolean
+  convulsoes                      Boolean
+  confusaoMental                  Boolean
+  depressaoPosParto               String
+  integra                         Boolean
+  escoreacoes                     Boolean
+  feridas                         Boolean
+  hiperemia                       Boolean
+  hematomas                       Boolean
+  equimoses                       Boolean
+  mamas                           String
+  mamilos                         String
+  colostro                        Boolean
+  outrasInformacoesColostro       String
+  manobraDeLeopold                String
+  apresentacao                    String
+  alturaUterina                   String
+  circunferenciaAbdominal         String
+  mobilidadeCefalica              String
+  coloDilatacao                   String
+  planoDeLee                      String
+  observacaoToqueVaginal          Boolean
+  bolsa                           String
+  hora                            String
+  corDoLiquidoAmniotico           String
+  outrasInformacoesToqueVaginal   String
+  dataUltimaMenstruacao           DateTime
+  dataProvavelParto               DateTime
+  dataUltimoParto                 DateTime
+  algumFilhoMalformado            Boolean
+  especifiqueFilhoMalformado      String
+  episiotomia                     Boolean
+  forcepes                        Boolean
+  hpp                             Boolean
+  retencaoPlacenta                Boolean
+  outrosPartosAnteriores          String
+  tratamentoPartoAnterior         String
+  dstIst                          String
+  outrasInformacoesReproducao     String
+  peso                            String
+  altura                          String
+  ultimaRefeicao                  String
+  outrasInformacoesHidratacao     String
+  desidratada                     Boolean
+  fome                            Boolean
+  anorexia                        Boolean
+  sede                            Boolean
+  labiosRessecados                Boolean
+  nauseas                         Boolean
+  vomitos                         Boolean
+  vesical                         String
+  intestinal                      String
+  evacuouAposParto                Boolean
+  tempoSemEvacuar                 String
+  vaginal                         String
+  outrasInformacoesVaginal        String
+  protese                         String
+  ondeProtese                     String
+  dificuldadeDeLocomocao          String
+  outrasInformacoesLocomocao      String
+  redeVenosa                      String
+  puncaoVenosa                    String
+  dispositivoUtilizado            String
+  alergiaMedicamentos             Boolean
+  quaisMedicamentos               String
+  tipoDeSangue                    String
+  recebeuImunoglobulina           Boolean
+  vicios                          String
+  numeroCigarros                  String
+  usoDeDrogas                     String
+  usoDuranteGestacao              Boolean
+  outrasInformacoesVicios         String
+  acuidadeVisual                  String
+  acuidadeAuditiva                String
+  movimentacaoFetal               String
+  contracaoUterina                String
+  frequencia                      String
+  intensidade                     String
+  localDor                        Boolean  @default(false)
+  localDorAbdominal               Boolean
+  localDorSacral                  Boolean
+  localDorLombar                  Boolean
+  localDorOutro                   Boolean
+  respiracaoAlivia                Boolean
+  banhoMornoAlivia                Boolean
+  posicaoAlivia                   Boolean
+  massagemAlivia                  Boolean
+  outrosAlivia                    Boolean
+  higieneDesconforto              Boolean
+  acessoVenosoDesconforto         Boolean
+  barulhoDesconforto              Boolean
+  odorDesconforto                 Boolean
+  outrosDesconforto               Boolean
+  sonoRepouso                     String
+  numeroNoitesSemDormir           String
+  motivoSemDormir                 String
+  realizouAtividadeFisica         Boolean
+  quaisAtividades                 String
+  outrasInformacoesAtividade      String
+  condicoesHigiene                String
+  outrasInformacoesHigiene        String
+  preNatal                        Boolean
+  numeroConsultas                 String
+  igQueIndicouPreNatal            String
+  planoDeParto                    Boolean
+  participouGrupoGestante         Boolean
+  realizouVinculacao              Boolean
+  tpParto                         Boolean
+  cesarea                         Boolean
+  intercorrenciasGestacao         Boolean
+  amamentacao                     Boolean
+  alojamentoConjunto              Boolean
+  puerperio                       Boolean
+  outros                          Boolean
+  gostariaDeReceberInformacoes    String
+  compreensao                     String
+  outrasInformacoesNecessidades   String
+  planejouGravidez                Boolean
+  elaDesejaGravidez               Boolean
+  pretendeAmamentar               Boolean
+  amamentouOutrosFilhos           Boolean
+  quantosMeses                    String
+  preocupacoesIncomoda            Boolean
+  medosIncomoda                   Boolean
+  ansiedadeIncomoda               Boolean
+  angustiaIncomoda                Boolean
+  agitacaoIncomoda                Boolean
+  choroIncomoda                   Boolean
+  gritoIncomoda                   Boolean
+  refereNaoTerEnergiaIncomoda     Boolean
+  relutancaIncomoda               Boolean
+  dificuldadeLidarIncomoda        Boolean
+  quaisExpectativas               String
+  religiao                        Boolean
+  qualReligiao                    String
+  fazAlgumaLimitacao              Boolean
+  quaisLimitacoes                 String
+  desejaAcompanhante              Boolean
+  nomeAcompanhante                String
+  vinculoAcompanhante             String
+  servicoSocialEncaminhamento     Boolean
+  psicologoEncaminhamento         Boolean
+  fisioterapiaEncaminhamento      Boolean
+  outrosEncaminhamentos           String
+  outrasInformacoesEncaminhamento String
+
+  createdAt DateTime @default(now())
+}
+
+model Enfermeiro {
+  id        String   @id @unique
+  nome      String
+  coren     String   @unique
+  cargo     String
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model PuerperioImediato {
+  id                       String   @id @unique
+  paciente                 Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId               String
+  fr                       String
+  oxigenacao               String
+  ingestaoLiquidos         String
+  labiosRessecados         Boolean
+  linguaSeca               Boolean
+  peleSeca                 Boolean
+  polidipsia               Boolean
+  sede                     Boolean
+  turgoDaPele              Boolean
+  hidratacaoVenosa         String
+  local                    String
+  ruidosHidroaereos        String
+  alteracoesDentarias      Boolean
+  disfagia                 Boolean
+  dispesia                 Boolean
+  distensaoAbdominal       Boolean
+  fome                     Boolean
+  nauseas                  Boolean
+  dorEpigastica            Boolean
+  intoleranciaAlimentos    Boolean
+  especificar              String
+  debitoUrinario           String
+  aspectoUrina             String
+  disuria                  Boolean
+  svd                      Boolean
+  bexigoma                 Boolean
+  abdomenGlobosa           Boolean
+  hemorroidas              Boolean
+  dorAbdominal             Boolean
+  dificuldadeDeDefecar     Boolean
+  fezesDurasSecas          Boolean
+  eliminacaoNenhum         Boolean
+  acordaVariasVezes        Boolean
+  insonia                  Boolean
+  sonolencia               Boolean
+  desconfortoFisico        Boolean
+  desconfortoAmbiental     Boolean
+  cabelosSujos             Boolean
+  caspas                   Boolean
+  seborreira               Boolean
+  faltaDeMotivacao         Boolean
+  halitose                 Boolean
+  imobilidade              Boolean
+  mauOdor                  Boolean
+  pediculos                Boolean
+  unhasSunhas              Boolean
+  maHigiene                Boolean
+  nenhumCuidadoCorporal    Boolean
+  quantidadeDeBanho        String
+  acessoVenoso             Boolean
+  deiscencia               Boolean
+  episiorrafia             Boolean
+  hematomas                Boolean
+  insicaoCirurgica         Boolean
+  lesaoPerineal            Boolean
+  lesalMamilar             Boolean
+  mamasHiperimeadas        Boolean
+  mucosasHipocoradas       Boolean
+  prurido                  Boolean
+  sinaisFlogisticos        Boolean
+  localIntegridade         String
+  calafrios                Boolean
+  temperaturaCorporal      String
+  pulsoBpm                 String
+  paMmHg                   String
+  ritimoCardiaco           Boolean
+  bulhasCardiacas          String
+  loquiosAlterados         String
+  especifiqueLoquios       String
+  alturaUterina            String
+  clicemiaCapilar          String
+  estadoNeurologico        Boolean
+  cefaleia                 Boolean
+  colica                   Boolean
+  dorNasMamas              Boolean
+  dorNaIncisao             Boolean
+  dorPerineal              Boolean
+  seguranca                String
+  amoreAceitacao           String
+  dificuldadeDeCuidarRn    Boolean
+  dificuldadeDeOrdenhar    Boolean
+  dificuldadeDeAmamentar   Boolean
+  duvidaSobreAmamentacao   Boolean
+  duvidaSobreOAutoCuidado  Boolean
+  duvidaSobreAleitamento   Boolean
+  evitaFamiliares          Boolean
+  evitaVisitas             Boolean
+  isolamento               Boolean
+  sensacaoAbandono         Boolean
+  solidao                  Boolean
+  faltaDeConfianca         Boolean
+  preocupacaoComImagem     Boolean
+  sentimentoDeIncapacidade Boolean
+  afetadaReligiosidade     Boolean
+  especificarAfetada       String
+  createdAt                DateTime @default(now())
+}
+
+model Nascimento {
+  id                       String   @id @unique
+  paciente                 Paciente @relation(fields: [pacienteId], references: [id])
+  pacienteId               String
+  dataDoParto              DateTime
+  horaDoParto              String
+  tipoDeParto              String
+  outrasInformacoesParto   String?  @default("")
+  posicaoDoParto           String
+  outrasInformacoesPosicao String?  @default("")
+  perineo                  String
+  laceracao                String
+  localizacaoLaceracao     String?  @default("")
+  sutura                   String
+  circularCordao           String
+  quantasVoltas            String
+  apertadoFrouxo           String
+  complicacoes             String
+  conduta                  String
+  dequitacao               String
+  horaDequitacao           String
+  mecanismo                String
+  intercorrencias          String
+  loquios                  String
+  globoPinard              String
+  utero                    String
+  localizacaoUtero         String
+  pressaoArterial          String
+  pulso                    String
+  bpm                      String
+  respiracao               String
+  temperatura              String
+  outrasInformacoesPeriodo String
+  rn                       String
+  chorouAoNascer           String
+  ativoHipoativo           String
+  sexo                     String
+  semAnormaMalFormacao     String
+  apgar1                   String
+  apgar2                   String
+  apgar5                   String
+  capurro                  String
+  clampeamento             String
+  contatoPelePele          String
+  aleitamento1hora         String
+  quemCortouCordao         String
+  aspiracaoOral            Boolean
+  lavagemGasttricame       Boolean
+  reanimacao               Boolean
+  ventilacaoPressao        Boolean
+  oxigenioterapia          Boolean
+  nenhum                   Boolean
+  peso                     String
+  altura                   String
+  perimetroCefalicoso      String
+  perimetroToracico        String
+  perimetroAbdominal       String
+  kanakion                 String
+  bercoAquecido            Boolean
+  cepap                    Boolean
+  alojamentoConjunto       Boolean
+  transferidoUnidade       Boolean
+  outrasInformacoesRn      String?  @default("")
+  createdAt                DateTime @default(now())
+}
